@@ -1,4 +1,4 @@
-import { Component } from '@angular/core';
+import { Component, OnInit } from '@angular/core';
 import { Room, RoomList } from './rooms';
 
 
@@ -7,7 +7,7 @@ import { Room, RoomList } from './rooms';
   templateUrl: './rooms.component.html',
   styleUrl: './rooms.component.scss'
 })
-export class RoomsComponent {
+export class RoomsComponent implements OnInit {
   hotelname: string = "Marriot Hotel";
   hideRooms = false;
 
@@ -18,8 +18,12 @@ export class RoomsComponent {
   }
   numberOfRooms = this.rooms.totalRooms
 
-  roomList: RoomList[] = [
-    {
+  roomList: RoomList[] = []
+  selectedRoom !: RoomList
+  constructor() {}
+
+  ngOnInit(): void {
+    this.roomList = [{
       roomNumber: 1,
       roomType: 'Deluxe Suite',
       amenities: 'WiFi, TV, Mini Bar, Ocean View',
@@ -69,9 +73,30 @@ export class RoomsComponent {
       checkOutTime: new Date('18-Dec-2024'),
       rating: 4.52342
     }
-  ]
+    ]
+  }
+
+  selectRoom(room:RoomList){
+    this.selectedRoom = room;
+  }
 
   toggle() {
     this.hideRooms = !this.hideRooms;
+  }
+
+  addRoom(){
+    const room: RoomList = {
+      roomNumber: 6,
+      roomType: 'Homeless',
+      amenities: 'WiFi, TV, Mini Bar, Ocean View, Private Pool, Butler Service',
+      price: 300,
+      photos: 'https://example.com/photos/presidential-suite.jpg',
+      checkInTime: new Date('15-May-2024'),
+      checkOutTime: new Date('18-June-2024'),
+      rating: 3.3
+    };
+
+    // this.roomList.push(room);
+    this.roomList = [...this.roomList,room]
   }
 }

@@ -1,39 +1,27 @@
 <h2>Welcome to {{hotelname}}!</h2>
 <div [hidden]="hideRooms">
     Number of Rooms
-    <div [ngStyle]="{'color' : rooms.availableRooms ? 'red':'green' }" [innerText]="numberOfRooms"></div>
+    <div [innerText]="numberOfRooms"></div>
+    <!-- <div [ngStyle]="{'color' : rooms.availableRooms ? 'red':'green' }" [innerText]="numberOfRooms"></div> -->
 </div>
 
 
 <div *ngIf="rooms.availableRooms>10">
-    <!-- Rooms List = {{roomList}} -->
-    <table>
-        <tr>
-            <th>Value of the row</th>
-            <th>Index</th>
-            <th>Room Number</th>
-            <th>Room Type</th>
-            <th>Room Price</th>
-            <th>Amenities</th>
-            <th>Check In Time</th>
-            <th>Ratings</th>
-            <th>Check Out Time</th>
-        </tr>
-        <tr 
-            [ngClass] = "e? 'even' : 'odd'"
-            *ngFor="let room of roomList | slice : 0:5 ;let e=even; let o=odd; let i=index" >
-            <td>{{e?"Even":"Odd"}}</td>
-            <td>{{i+1}}</td>
-            <td>{{room.roomNumber}}</td>
-            <td>{{room.roomType}}</td>
-            <td>{{room.price | currency : 'GBP'}}</td>
-            <td>{{room.amenities | titlecase}}</td>
-            <td>{{room.checkInTime | date : 'shortDate'}}</td>
-            <td>{{room.rating | number : '1.1-3' : 'en-us'}}</td>
-            <td>{{room.checkOutTime | date : 'shortDate'}}</td>
-        </tr>
-        
-    </table>
+    <app-rooms-list [roomsList]="roomList"
+    (selectedRoom)="selectRoom($event)"
+    ></app-rooms-list>
+    
 </div>
 
-<button (click)="toggle()">Toggle</button>
+<div>
+    <button class="btn btn-primary" (click)="toggle()">Toggle</button>
+</div>
+<br/>
+<div>
+    <button class="btn btn-primary" (click)="addRoom()">Add Room</button>
+</div>
+
+
+<div *ngIf="selectedRoom">
+    {{selectedRoom | json}}
+</div>
