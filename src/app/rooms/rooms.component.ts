@@ -1,4 +1,5 @@
-import { Component, OnInit } from '@angular/core';
+import { HeaderComponent } from './../header/header.component';
+import { AfterViewChecked, AfterViewInit, Component, DoCheck, OnInit, QueryList, ViewChild, ViewChildren } from '@angular/core';
 import { Room, RoomList } from './rooms';
 
 
@@ -7,7 +8,7 @@ import { Room, RoomList } from './rooms';
   templateUrl: './rooms.component.html',
   styleUrl: './rooms.component.scss'
 })
-export class RoomsComponent implements OnInit {
+export class RoomsComponent implements OnInit, DoCheck, AfterViewInit, AfterViewChecked {
   hotelname: string = "Marriot Hotel";
   hideRooms = false;
 
@@ -16,13 +17,42 @@ export class RoomsComponent implements OnInit {
     availableRooms: 11,
     bookedRooms: 5
   }
+  title = "Rooms List"
   numberOfRooms = this.rooms.totalRooms
 
   roomList: RoomList[] = []
+
+
+
   selectedRoom !: RoomList
-  constructor() {}
+
+
+  constructor() { }
+
+  @ViewChild(HeaderComponent, { static: true }) headerComponent!: HeaderComponent
+
+  @ViewChildren(HeaderComponent) headerChildrenComponent!: QueryList<HeaderComponent>;
+
+  ngAfterViewInit(): void {
+    this.headerComponent.headertitle = "Hello World this is Your Hotel Inventory Website"
+
+    this.headerChildrenComponent.last.headertitle = "Last header Title"
+  }
+
+  ngAfterViewChecked(): void {
+
+  }
+
+
+  ngDoCheck(): void {
+    console.log('on change is called');
+
+  }
 
   ngOnInit(): void {
+
+    console.log(this.headerComponent);
+
     this.roomList = [{
       roomNumber: 1,
       roomType: 'Deluxe Suite',
@@ -76,15 +106,16 @@ export class RoomsComponent implements OnInit {
     ]
   }
 
-  selectRoom(room:RoomList){
+  selectRoom(room: RoomList) {
     this.selectedRoom = room;
   }
 
   toggle() {
     this.hideRooms = !this.hideRooms;
+    this.title = "Rooms Available"
   }
 
-  addRoom(){
+  addRoom() {
     const room: RoomList = {
       roomNumber: 6,
       roomType: 'Homeless',
@@ -97,6 +128,6 @@ export class RoomsComponent implements OnInit {
     };
 
     // this.roomList.push(room);
-    this.roomList = [...this.roomList,room]
+    this.roomList = [...this.roomList, room]
   }
 }
