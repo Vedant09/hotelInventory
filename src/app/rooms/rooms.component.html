@@ -9,7 +9,7 @@
 </div>
 
 
-<div *ngIf="rooms.availableRooms>10">
+<div *ngIf="hideRooms">
     <app-rooms-list [roomsList]="roomList" [title]="title"
     (selectedRoom)="selectRoom($event)"
     ></app-rooms-list>
