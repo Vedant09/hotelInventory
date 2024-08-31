@@ -7,3 +7,7 @@ export const localStorageToken = new InjectionToken<any>('local storage', {
         return localStorage;
     },
 });
+
+function add(){
+    console.log(3+3);
+}
