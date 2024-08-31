@@ -11,6 +11,7 @@ import { RoomsListComponent } from './rooms/rooms-list/rooms-list.component';
 import { HeaderComponent } from './header/header.component';
 import { ContainerComponent } from './container/container.component';
 import { EmployeeComponent } from './employee/employee.component';
+import { APP_CONFIG, APP_SERVICE_CONGIF } from './AppConfig/appconfig.service';
 
 @NgModule({
   declarations: [
@@ -29,7 +30,12 @@ import { EmployeeComponent } from './employee/employee.component';
     NgbModule
   ],
   providers: [
+    {
+      provide : APP_SERVICE_CONGIF,
+      useValue : APP_CONFIG,
+    },
     provideClientHydration()
+    
   ],
   bootstrap: [AppComponent]
 })
