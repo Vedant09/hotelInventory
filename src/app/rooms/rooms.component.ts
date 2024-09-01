@@ -2,6 +2,7 @@ import { RoomsService } from './services/rooms.service';
 import { HeaderComponent } from './../header/header.component';
 import { AfterViewChecked, AfterViewInit, Component, DoCheck, OnInit, QueryList, ViewChild, ViewChildren } from '@angular/core';
 import { Room, RoomList } from './rooms';
+import { Observable } from 'rxjs';
 
 
 @Component({
@@ -23,6 +24,12 @@ export class RoomsComponent implements OnInit, DoCheck, AfterViewInit, AfterView
 
   roomList: RoomList[] = []
 
+  stream = new Observable(observer =>{
+    observer.next('user 1'),
+    observer.next('user 2'),
+    observer.next('user 3')
+    observer.complete()
+  })
 
 
   selectedRoom !: RoomList
@@ -53,8 +60,16 @@ export class RoomsComponent implements OnInit, DoCheck, AfterViewInit, AfterView
   ngOnInit(): void {
 
     console.log(this.headerComponent);
-    this.roomList = this.roomsService.getRooms();
     
+    this.stream.subscribe({
+      next: (value)=>console.log(value),
+      complete: ()=>console.log('complete'),
+      error: (err)=>console.log(err)
+    })
+
+    this.roomsService.getRooms().subscribe(rooms => {
+      this.roomList =  rooms;
+    }); 
   }
 
   selectRoom(room: RoomList) {
@@ -68,7 +83,7 @@ export class RoomsComponent implements OnInit, DoCheck, AfterViewInit, AfterView
 
   addRoom() {
     const room: RoomList = {
-      roomNumber: 6,
+      roomNumber: '6',
       roomType: 'Homeless',
       amenities: 'WiFi, TV, Mini Bar, Ocean View, Private Pool, Butler Service',
       price: 300,

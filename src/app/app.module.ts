@@ -12,6 +12,7 @@ import { HeaderComponent } from './header/header.component';
 import { ContainerComponent } from './container/container.component';
 import { EmployeeComponent } from './employee/employee.component';
 import { APP_CONFIG, APP_SERVICE_CONGIF } from './AppConfig/appconfig.service';
+import { provideHttpClient } from '@angular/common/http';
 
 @NgModule({
   declarations: [
@@ -27,14 +28,15 @@ import { APP_CONFIG, APP_SERVICE_CONGIF } from './AppConfig/appconfig.service';
     AppRoutingModule,
     CommonModule,
     BrowserAnimationsModule,
-    NgbModule
+    NgbModule,
   ],
   providers: [
     {
       provide : APP_SERVICE_CONGIF,
       useValue : APP_CONFIG,
     },
-    provideClientHydration()
+    provideClientHydration(),
+    provideHttpClient()
     
   ],
   bootstrap: [AppComponent]
