@@ -19,6 +19,7 @@ export class RoomsService {
     
   }
 
+  //get method
   getRooms(){
     return this.http.get<RoomList[]>('/api/rooms');
   }
