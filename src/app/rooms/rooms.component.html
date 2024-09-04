@@ -23,7 +23,10 @@
 <div *ngIf="hideRooms">
     <button class="btn btn-primary" (click)="addRoom()">Add Room</button>
 </div>
-
+<br>
+<div *ngIf="hideRooms">
+    <button class="btn btn-primary" (click)="editRooms()">Edit Room</button>
+</div>
 
 <div *ngIf="selectedRoom">
     {{selectedRoom | json}}

@@ -94,6 +94,25 @@ export class RoomsComponent implements OnInit, DoCheck, AfterViewInit, AfterView
     };
 
     // this.roomList.push(room);
-    this.roomList = [...this.roomList, room]
+    this.roomsService.addRooms(room).subscribe((data) =>{
+      this.roomList = data;
+    });
+  }
+
+  editRooms() {
+    const room: RoomList = {
+      roomNumber: '3',
+      roomType: 'TownShips',
+      amenities: 'WiFi, TV, Mini Bar',
+      price: 4000,
+      photos: 'https://example.com/photos/presidential-suite.jpg',
+      checkInTime: new Date('15-Dec-2024'),
+      checkOutTime: new Date('18-Jan-2025'),
+      rating: 3.5
+    };
+  
+    this.roomsService.editRooms(room).subscribe((updatedRooms) => {
+      this.roomList = updatedRooms;
+    });
   }
 }
