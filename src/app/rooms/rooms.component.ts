@@ -3,6 +3,7 @@ import { HeaderComponent } from './../header/header.component';
 import { AfterViewChecked, AfterViewInit, Component, DoCheck, OnInit, QueryList, ViewChild, ViewChildren } from '@angular/core';
 import { Room, RoomList } from './rooms';
 import { Observable } from 'rxjs';
+import { HttpEventType } from '@angular/common/http';
 
 
 @Component({
@@ -12,8 +13,8 @@ import { Observable } from 'rxjs';
 })
 export class RoomsComponent implements OnInit, DoCheck, AfterViewInit, AfterViewChecked {
   hotelname: string = "Marriot Hotel";
-  hideRooms = false;
-
+  hideRooms = true;
+ 
   rooms: Room = {
     totalRooms: 20,
     availableRooms: 11,
@@ -34,7 +35,7 @@ export class RoomsComponent implements OnInit, DoCheck, AfterViewInit, AfterView
 
   selectedRoom !: RoomList
 
-
+  total_byte:number=0;
   constructor(private roomsService:RoomsService) { }
 
   @ViewChild(HeaderComponent, { static: true }) headerComponent!: HeaderComponent
@@ -58,6 +59,30 @@ export class RoomsComponent implements OnInit, DoCheck, AfterViewInit, AfterView
   }
 
   ngOnInit(): void {
+    
+    this.roomsService.getPhotos().subscribe((event)=>{
+      switch (event.type) {
+        case HttpEventType.Sent:{
+            console.log('Request has been made');
+            break;
+        }
+        case HttpEventType.ResponseHeader:{
+          console.log('Request success');
+          break;
+        }
+        case HttpEventType.DownloadProgress:{
+          this.total_byte += event.loaded;
+          console.log(`Bytes Loaded: ${event.loaded}`);
+          break;
+        }
+        case HttpEventType.Response:{
+          console.log(event.body);
+          break;
+        }
+        default:
+          break;
+      }
+    });
 
     console.log(this.headerComponent);
     
@@ -113,6 +138,12 @@ export class RoomsComponent implements OnInit, DoCheck, AfterViewInit, AfterView
   
     this.roomsService.editRooms(room).subscribe((updatedRooms) => {
       this.roomList = updatedRooms;
+    });
+  }
+
+  deleteRooms(){
+    this.roomsService.deleteRooms('3').subscribe((data)=>{
+      this.roomList = data;
     });
   }
 }

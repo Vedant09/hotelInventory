@@ -27,7 +27,15 @@
 <div *ngIf="hideRooms">
     <button class="btn btn-primary" (click)="editRooms()">Edit Room</button>
 </div>
+<br>
+<div *ngIf="hideRooms">
+    <button class="btn btn-primary" (click)="deleteRooms()">Delete Room</button>
+</div>
 
 <div *ngIf="selectedRoom">
     {{selectedRoom | json}}
 </div>
+
+<h1>
+    {{total_byte}} bytes loaded
+</h1>
