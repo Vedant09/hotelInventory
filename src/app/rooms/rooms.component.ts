@@ -40,7 +40,7 @@ export class RoomsComponent implements OnInit, DoCheck, AfterViewInit, AfterView
   //contains the stream of data for rooms
   rooms$!:Observable<RoomList[]>;
   //counts the number of rooms are available
-  roomsCoutn$!:any;
+  roomsCount$!:any;
   
 
   constructor(private roomsService:RoomsService) { }
@@ -73,12 +73,12 @@ export class RoomsComponent implements OnInit, DoCheck, AfterViewInit, AfterView
       console.log(err);
       return of([])
     })
-    )
+    );
 
     //counts number of rooms
-    this.roomsCoutn$ = this.roomsService.getRooms$.pipe(
+    this.roomsCount$ = this.roomsService.getRooms$.pipe(
       map((rooms)=>rooms.length)
-    )
+    );
     
     this.roomsService.getPhotos().subscribe((event)=>{
       switch (event.type) {
