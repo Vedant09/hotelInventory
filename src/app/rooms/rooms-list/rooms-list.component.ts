@@ -18,7 +18,7 @@ export class RoomsListComponent implements OnInit, OnChanges, OnDestroy {
   ngOnInit(): void {
    
   }
-  @Input() roomsList: RoomList[] = []
+  @Input() roomsList: RoomList[] | null = []
 
   @Input() title: String='';
 

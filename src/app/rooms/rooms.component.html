@@ -2,6 +2,10 @@
 <app-header></app-header>
 <app-header></app-header>
 
+
+
+    
+<h1>Number of rooms = {{roomsCoutn$ | async | json}}</h1>
 <div [hidden]="hideRooms">
     Number of Rooms
     <div [innerText]="numberOfRooms"></div>
@@ -9,8 +13,8 @@
 </div>
 
 
-<div *ngIf="hideRooms">
-    <app-rooms-list [roomsList]="roomList" [title]="title"
+<div *ngIf="rooms$ | async as roomsData">
+    <app-rooms-list [roomsList]="roomsData" [title]="title"
     (selectedRoom)="selectRoom($event)"
     ></app-rooms-list>
     

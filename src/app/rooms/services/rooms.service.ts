@@ -1,3 +1,4 @@
+import { shareReplay } from 'rxjs';
 import { HttpClient, HttpRequest } from '@angular/common/http';
 import { AppConfig } from './../../AppConfig/appconfig.interface';
 import { Inject, Injectable } from '@angular/core';
@@ -11,14 +12,16 @@ export class RoomsService {
 
   roomList : RoomList[] = [
   ]
+  getRooms$;
+  
 
   constructor(@Inject(APP_SERVICE_CONGIF) private config: AppConfig,
-  @Inject(HttpClient) private http : HttpClient) { 
+   private http : HttpClient) { 
     console.log("initialized Room Services");
     console.log(this.config.apiEndpoint);
-    
+    this.getRooms$ = this.http.get<RoomList[]>('/api/rooms').pipe(shareReplay(1));
   }
-
+ 
   //get method
   getRooms(){
     return this.http.get<RoomList[]>('/api/rooms');

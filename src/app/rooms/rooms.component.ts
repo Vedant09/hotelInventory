@@ -2,7 +2,7 @@ import { RoomsService } from './services/rooms.service';
 import { HeaderComponent } from './../header/header.component';
 import { AfterViewChecked, AfterViewInit, Component, DoCheck, OnInit, QueryList, ViewChild, ViewChildren } from '@angular/core';
 import { Room, RoomList } from './rooms';
-import { Observable } from 'rxjs';
+import { catchError, map, Observable, of } from 'rxjs';
 import { HttpEventType } from '@angular/common/http';
 
 
@@ -36,6 +36,13 @@ export class RoomsComponent implements OnInit, DoCheck, AfterViewInit, AfterView
   selectedRoom !: RoomList
 
   total_byte:number=0;
+
+  //contains the stream of data for rooms
+  rooms$!:Observable<RoomList[]>;
+  //counts the number of rooms are available
+  roomsCoutn$!:any;
+  
+
   constructor(private roomsService:RoomsService) { }
 
   @ViewChild(HeaderComponent, { static: true }) headerComponent!: HeaderComponent
@@ -59,6 +66,19 @@ export class RoomsComponent implements OnInit, DoCheck, AfterViewInit, AfterView
   }
 
   ngOnInit(): void {
+
+    //catchError remember not to use it in any component
+   this.rooms$ = this.roomsService.getRooms$.pipe(
+    catchError((err)=>{
+      console.log(err);
+      return of([])
+    })
+    )
+
+    //counts number of rooms
+    this.roomsCoutn$ = this.roomsService.getRooms$.pipe(
+      map((rooms)=>rooms.length)
+    )
     
     this.roomsService.getPhotos().subscribe((event)=>{
       switch (event.type) {
@@ -92,9 +112,9 @@ export class RoomsComponent implements OnInit, DoCheck, AfterViewInit, AfterView
       error: (err)=>console.log(err)
     })
 
-    this.roomsService.getRooms().subscribe(rooms => {
-      this.roomList =  rooms;
-    }); 
+    // this.roomsService.getRooms$.subscribe(rooms => {
+    //   this.roomList =  rooms;
+    // }); created a whole new stream rooms$ having this
   }
 
   selectRoom(room: RoomList) {
