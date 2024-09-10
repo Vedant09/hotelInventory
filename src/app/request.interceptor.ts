@@ -10,12 +10,15 @@ export class MyInterceptor implements HttpInterceptor {
   intercept(req: HttpRequest<any>, next: HttpHandler): Observable<HttpEvent<any>> {
     // Modify the request here
     console.log('HTTP Request Intercepted:', req);
-    const clonedRequest = req.clone({
-      headers: new HttpHeaders({
-        token: '123124'
-      })
-    });
-    
-    return next.handle(clonedRequest);
+    if(req.method === 'POST'){
+      const clonedRequest = req.clone({
+        headers: new HttpHeaders({
+          token: '123124'
+        })
+      });
+      
+      return next.handle(clonedRequest);
+    }
+  return next.handle(req);
   }
 }
