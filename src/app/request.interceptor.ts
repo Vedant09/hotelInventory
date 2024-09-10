@@ -1,4 +1,4 @@
-import { HttpInterceptor, HttpRequest, HttpHandler, HttpEvent } from '@angular/common/http';
+import { HttpInterceptor, HttpRequest, HttpHandler, HttpEvent, HttpHeaders } from '@angular/common/http';
 import { Injectable } from '@angular/core';
 import { Observable } from 'rxjs';
 
@@ -10,12 +10,12 @@ export class MyInterceptor implements HttpInterceptor {
   intercept(req: HttpRequest<any>, next: HttpHandler): Observable<HttpEvent<any>> {
     // Modify the request here
     console.log('HTTP Request Intercepted:', req);
-    // const clonedRequest = req.clone({
-    //   setHeaders: {
-    //     token: '123124'
-    //   }
-    // });
+    const clonedRequest = req.clone({
+      headers: new HttpHeaders({
+        token: '123124'
+      })
+    });
     
-    return next.handle(req);
+    return next.handle(clonedRequest);
   }
 }
