@@ -14,6 +14,7 @@ import { EmployeeComponent } from './employee/employee.component';
 import { APP_CONFIG, APP_SERVICE_CONGIF } from './AppConfig/appconfig.service';
 import { HTTP_INTERCEPTORS, provideHttpClient } from '@angular/common/http';
 import { MyInterceptor } from './request.interceptor';
+import { provideAnimationsAsync } from '@angular/platform-browser/animations/async';
 
 @NgModule({
   declarations: [
@@ -42,7 +43,8 @@ import { MyInterceptor } from './request.interceptor';
       multi: true 
     },
     provideClientHydration(),
-    provideHttpClient()
+    provideHttpClient(),
+    provideAnimationsAsync()
 
   ],
   bootstrap: [AppComponent]
