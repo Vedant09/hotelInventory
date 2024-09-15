@@ -15,6 +15,12 @@ import { APP_CONFIG, APP_SERVICE_CONGIF } from './AppConfig/appconfig.service';
 import { HTTP_INTERCEPTORS, provideHttpClient } from '@angular/common/http';
 import { MyInterceptor } from './request.interceptor';
 import { provideAnimationsAsync } from '@angular/platform-browser/animations/async';
+import { NavigationsComponent } from './navigations/navigations.component';
+import { MatToolbarModule } from '@angular/material/toolbar';
+import { MatButtonModule } from '@angular/material/button';
+import { MatSidenavModule } from '@angular/material/sidenav';
+import { MatIconModule } from '@angular/material/icon';
+import { MatListModule } from '@angular/material/list';
 
 @NgModule({
   declarations: [
@@ -23,7 +29,8 @@ import { provideAnimationsAsync } from '@angular/platform-browser/animations/asy
     RoomsListComponent,
     HeaderComponent,
     ContainerComponent,
-    EmployeeComponent
+    EmployeeComponent,
+    NavigationsComponent
   ],
   imports: [
     BrowserModule,
@@ -31,6 +38,11 @@ import { provideAnimationsAsync } from '@angular/platform-browser/animations/asy
     CommonModule,
     BrowserAnimationsModule,
     NgbModule,
+    MatToolbarModule,
+    MatButtonModule,
+    MatSidenavModule,
+    MatIconModule,
+    MatListModule,
   ],
   providers: [
     {
