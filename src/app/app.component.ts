@@ -14,13 +14,13 @@ export class AppComponent implements OnInit {
   
   
 
-  @ViewChild('name', { static: true }) name!: ElementRef;
+  @ViewChild('name') name!: ElementRef;
 
   constructor(@Inject(localStorageToken) private localStorage : Storage){}
 
-  ngOnInit(){
-    this.name.nativeElement.innerText = "Hilton Hotles";
-    this.localStorage.setItem('name','Oberoi Hotels');
+  ngOnInit() {
+    // Access nativeElement safely after the view has initialized
+    // this.name.nativeElement.innerText = "Hilton Hotels";
   }
 
   //ng template for component creation for ViewChild

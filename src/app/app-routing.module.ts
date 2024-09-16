@@ -1,3 +1,4 @@
+import { NotFoundComponent } from './not-found/not-found.component';
 import { RoomsComponent } from './rooms/rooms.component';
 import { EmployeeComponent } from './employee/employee.component';
 import { NgModule} from '@angular/core';
@@ -12,7 +13,11 @@ const routes: Routes = [
   },
   {
     path : "" ,redirectTo:"/rooms", pathMatch: 'full'
+  },
+  {
+    path : "**" ,component: NotFoundComponent
   }
+
 ];
 
 @NgModule({
