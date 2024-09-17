@@ -6,5 +6,6 @@ import { Component } from '@angular/core';
   styleUrl: './not-found.component.scss'
 })
 export class NotFoundComponent {
-
+errorcode:string = '404!!'
+message:string = 'ERROR, PAGE NOT FOUND!!!'
 }
