@@ -7,5 +7,5 @@ import { Component } from '@angular/core';
 })
 export class NotFoundComponent {
 errorcode:string = '404!!'
-message:string = 'ERROR, PAGE NOT FOUND!!!'
+message:string = 'ERROR!!!, PAGE NOT FOUND.'
 }
